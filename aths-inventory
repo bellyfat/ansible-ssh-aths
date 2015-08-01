@@ -50,11 +50,13 @@ class ExampleInventory(object):
         # return
         fullpath_to_aths_dir = 'ssh-aths-inventory'
         inventory = AutoVivification()
+        inventory['group']['hosts'] = []
 
         # Format for ATHS filename should be:
         # 'ssh-aths-inventory/hostname'
         for filename in os.listdir(fullpath_to_aths_dir):
             host = filename
+            inventory['group']['hosts'].append(host)
             with open(os.path.join(fullpath_to_aths_dir, filename)) as f:
                 aths_info = f.readline()
                 aths_url = aths_info.split()[1]
