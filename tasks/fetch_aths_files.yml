@@ -1,0 +1,14 @@
+---
+- name: wait for aths file on target host
+  wait_for:
+    state: present
+    path: /var/lib/tor/services/ssh/hostname
+    delay: 5
+
+- name: fetch ssh aths file
+  fetch:
+    src: /var/lib/tor/services/ssh/hostname
+    dest: ssh-aths-inventory/dummy_hostname
+    flat: yes
+    fail_on_missing: yes
+

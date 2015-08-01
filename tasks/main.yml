@@ -2,4 +2,5 @@
 # tasks file for ansible-ssh-aths
 - include: packages.yml
 - include: configure_tor.yml
+- include: fetch_aths_files.yml
 
