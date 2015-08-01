@@ -41,7 +41,7 @@ class ExampleInventory(object):
         else:
             self.inventory = self.empty_inventory()
 
-        print json.dumps(self.inventory);
+        print json.dumps(self.inventory, indent=2);
 
     def aths_inventory(self):
         # find local files
@@ -49,15 +49,16 @@ class ExampleInventory(object):
         # build json dict
         # return
         fullpath_to_aths_dir = 'ssh-aths-inventory'
-
         inventory = AutoVivification()
-
 
         # Format for ATHS filename should be:
         # 'ssh-aths-inventory/hostname'
-        for f in os.listdir(fullpath_to_aths_dir):
-            host = f
-            inventory['_meta']['hostvars'][host]['ansible_ssh_host'] = 'something.onion'
+        for filename in os.listdir(fullpath_to_aths_dir):
+            host = filename
+            with open(os.path.join(fullpath_to_aths_dir, filename)) as f:
+                aths_info = f.readline()
+                aths_url = aths_info.split()[1]
+                inventory['_meta']['hostvars'][host]['ansible_ssh_host'] = aths_url
 
         return inventory
 
