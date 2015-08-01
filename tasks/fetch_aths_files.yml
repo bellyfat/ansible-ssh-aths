@@ -8,13 +8,13 @@
 - name: fetch ssh aths file
   fetch:
     src: /var/lib/tor/services/ssh/hostname
-    dest: ssh-aths-inventory/dummy_hostname
+    dest: ssh-aths-inventory/{{ inventory_hostname }}
     flat: yes
     fail_on_missing: yes
 
 - name: reformat ssh aths file
   local_action: lineinfile
-      dest=ssh-aths-inventory/dummy_hostname
+      dest=ssh-aths-inventory/{{ inventory_hostname }}
       regexp='(.*)'
       backrefs=yes
       line='HidServAuth \1'
