@@ -61,6 +61,7 @@ class ExampleInventory(object):
                 aths_info = f.readline()
                 aths_url = aths_info.split()[1]
                 inventory['_meta']['hostvars'][host]['ansible_ssh_host'] = aths_url
+                inventory['_meta']['hostvars'][host]['ansible_ssh_private_key_file'] = '~/.ssh/digital_ocean'
 
         return inventory
 
