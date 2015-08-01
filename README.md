@@ -1,7 +1,10 @@
-Role Name
+SSH over ATHS
 =========
 
-A brief description of the role goes here.
+Restricts SSH traffic on target host to an Authenticated Tor Hidden Service (ATHS).
+All SSH traffic to the host, including Ansible commands, must be routed over Tor
+after this role is applied. Also requires a custom dynamic inventory script
+for handling the ATHS HidServAuth values that permit the connection.
 
 Requirements
 ------------
