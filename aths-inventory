@@ -13,6 +13,17 @@ try:
 except ImportError:
     import simplejson as json
 
+class AutoVivification(dict):
+    """Implementation of perl's autovivification feature."""
+    # Credit: http://stackoverflow.com/a/651879/140800
+    def __getitem__(self, item):
+        try:
+            return dict.__getitem__(self, item)
+        except KeyError:
+            value = self[item] = type(self)()
+            return value
+
+
 class ExampleInventory(object):
 
     def __init__(self):
@@ -21,7 +32,7 @@ class ExampleInventory(object):
 
         # Called with `--list`.
         if self.args.list:
-            self.inventory = self.example_inventory()
+            self.inventory = self.aths_inventory()
         # Called with `--host [hostname]`.
         elif self.args.host:
             # Not implemented, since we return _meta info `--list`.
@@ -31,6 +42,24 @@ class ExampleInventory(object):
             self.inventory = self.empty_inventory()
 
         print json.dumps(self.inventory);
+
+    def aths_inventory(self):
+        # find local files
+        # parse local files
+        # build json dict
+        # return
+        fullpath_to_aths_dir = 'ssh-aths-inventory'
+
+        inventory = AutoVivification()
+
+
+        # Format for ATHS filename should be:
+        # 'ssh-aths-inventory/hostname'
+        for f in os.listdir(fullpath_to_aths_dir):
+            host = f
+            inventory['_meta']['hostvars'][host]['ansible_ssh_host'] = 'something.onion'
+
+        return inventory
 
     # Example inventory for testing.
     def example_inventory(self):
