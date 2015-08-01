@@ -1,0 +1,22 @@
+---
+- name: ensure hidden services directory exists
+  file:
+    state: directory
+    dest: /var/lib/tor/services/ssh
+    owner: debian-tor
+    group: debian-tor
+    mode: "0700"
+
+- name: add torrc
+  copy:
+    src: torrc
+    dest: /etc/tor/torrc
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload tor
+
+- name: ensure tor is running
+  service:
+    name: tor
+    state: running
