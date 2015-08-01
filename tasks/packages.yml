@@ -2,14 +2,13 @@
 - name: add torproject.org apt repo signing key
   apt_key:
     state: present
-    data: "{{ lookup('file'), 'tor-signing-key.pub' }}"
+    data: "{{ lookup('file', 'tor-signing-key.pub') }}"
 
 - name: add torproject.org apt repo to sources.list
   apt_repository:
     repo: deb http://deb.torproject.org/torproject.org {{ ansible_lsb.codename }} main
     state: present
     update_cache: yes
-    cache_valid_time: 1800
 
 - name: install tor packages
   apt:
