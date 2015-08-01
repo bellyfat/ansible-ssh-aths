@@ -12,3 +12,12 @@
     flat: yes
     fail_on_missing: yes
 
+- name: reformat ssh aths file
+  local_action: lineinfile
+      dest=ssh-aths-inventory/dummy_hostname
+      regexp='(.*)'
+      backrefs=yes
+      line='HidServAuth \1'
+  sudo: no
+
+
