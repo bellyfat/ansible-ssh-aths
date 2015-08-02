@@ -59,8 +59,10 @@ class ExampleInventory(object):
             inventory['group']['hosts'].append(host)
             with open(os.path.join(fullpath_to_aths_dir, filename)) as f:
                 aths_info = f.readline()
-                aths_url = aths_info.split()[1]
+                aths_url, hidservauth_value = aths_info.split()[1:3]
                 inventory['_meta']['hostvars'][host]['ansible_ssh_host'] = aths_url
+                inventory['_meta']['hostvars'][host]['ansible_ssh_aths_url'] = aths_url
+                inventory['_meta']['hostvars'][host]['ansible_ssh_aths_hidservauth'] = hidservauth_value
                 inventory['_meta']['hostvars'][host]['ansible_ssh_private_key_file'] = '~/.ssh/digital_ocean'
 
         return inventory

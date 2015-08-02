@@ -1,0 +1,7 @@
+---
+- name: add ssh config entry for host
+  local_action: ssh_config
+    user={{ ansible_ssh_username | default(lookup('pipe', 'whoami'))}}
+    host={{ inventory_hostname }}
+    hostname={{ ansible_ssh_hostname }}
+    proxycommand='nc -x 127.0.0.1:9050 %h %p'

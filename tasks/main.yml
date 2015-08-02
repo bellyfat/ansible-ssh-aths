@@ -3,4 +3,6 @@
 - include: packages.yml
 - include: configure_tor.yml
 - include: fetch_aths_files.yml
+- include: update_ssh_config.yml
+
 
