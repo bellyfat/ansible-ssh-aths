@@ -5,3 +5,13 @@
     host={{ inventory_hostname }}
     hostname={{ ansible_ssh_host }}
     proxycommand='nc -x 127.0.0.1:9050 %h %p'
+
+- name: add hidserv auth values to local torrc
+  local_action: lineinfile
+      dest=local_torrc
+      backrefs=yes
+      regexp="{{ ansible_ssh_aths_hideservauth_entry }}"
+      line="{{ ansible_ssh_aths_hideservauth_entry }}"
+  sudo: yes
+  tags:
+    - torrc
