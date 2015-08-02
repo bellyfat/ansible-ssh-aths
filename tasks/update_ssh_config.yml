@@ -8,10 +8,11 @@
 
 - name: add hidserv auth values to local torrc
   local_action: lineinfile
-      dest=local_torrc
-      backrefs=yes
-      regexp="{{ ansible_ssh_aths_hideservauth_entry }}"
-      line="{{ ansible_ssh_aths_hideservauth_entry }}"
+    dest=/etc/tor/torrc
+    line="{{ ansible_ssh_aths_hidservauth_entry }}"
+    regexp="^HidServAuth {{ ansible_ssh_aths_url }}"
+    insertafter=EOF
   sudo: yes
+  notify: reload tor
   tags:
     - torrc
