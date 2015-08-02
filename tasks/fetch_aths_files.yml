@@ -3,7 +3,7 @@
   wait_for:
     state: present
     path: /var/lib/tor/services/ssh/hostname
-    delay: 5
+    delay: 2
 
 - name: fetch ssh aths file
   fetch:
@@ -18,6 +18,10 @@
       regexp='(.*)'
       backrefs=yes
       line='HidServAuth \1'
+      state=present
   sudo: no
 
+- name: set hidservauth_entry host fact
+  set_fact:
+    ansible_ssh_aths_hidservauth_entry: "{{ lookup('file', 'ssh-aths-inventory/'+inventory_hostname) }}"
 
