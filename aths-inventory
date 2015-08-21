@@ -13,6 +13,10 @@ try:
 except ImportError:
     import simplejson as json
 
+
+parent_dir = os.path.abspath(os.path.join(__file__, os.path.pardir))
+inventory_dir = os.path.join(parent_dir, "ssh-aths-inventory")
+
 class AutoVivification(dict):
     """Implementation of perl's autovivification feature."""
     # Credit: http://stackoverflow.com/a/651879/140800
@@ -48,14 +52,13 @@ class ATHSInventory(object):
         # parse local files
         # build json dict
         # return
-        fullpath_to_aths_dir = 'ssh-aths-inventory'
         inventory = AutoVivification()
         inventory['group']['hosts'] = []
 
         # Format for ATHS filename should be:
         # 'ssh-aths-inventory/hostname'
         try:
-            for filename in os.listdir(fullpath_to_aths_dir):
+            for filename in os.listdir(inventory_dir):
                 host = filename
                 inventory['group']['hosts'].append(host)
                 with open(os.path.join(fullpath_to_aths_dir, filename)) as f:
